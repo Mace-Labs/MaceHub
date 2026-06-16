@@ -4,10 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MaceHub.Web.Features.Example.Details;
 
-// Sub-feature in a nested namespace (...Features.Example.Details). It's a plain
-// controller — no areas, no per-controller view config. The FeatureViewLocationExpander
-// derives the view path "Example/Details" from this namespace, so Index.cshtml resolves
-// from Features/Example/Details/ automatically. Proves one-level nesting works.
 public class DetailsController(MaceHubDbContext db) : Controller
 {
     [HttpGet("/example/{id:int}")]

@@ -1,7 +1,5 @@
 @model Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary
 
-@* Validation errors for the Add form, swapped into #example-form-error via the
-   HX-Retarget/HX-Reswap headers set by ExampleController.Add on invalid input. *@
 <ul class="text-error text-sm list-disc list-inside">
     @foreach (var error in Model.Values.SelectMany(v => v.Errors))
     {

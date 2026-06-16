@@ -3,15 +3,9 @@ using Hangfire.Dashboard;
 namespace MaceHub.Web.Infrastructure;
 
 /// <summary>
-/// Allows ALL requests to the Hangfire dashboard. This is intentional and matches the
-/// project's accepted threat model: single-user, home-LAN only, http, no authentication
-/// (see CLAUDE.md — Security posture). Hangfire's built-in default only permits requests
-/// that are local to the server process, which returns 401 for any request reaching the
-/// container from another host (e.g. a browser on the LAN). This filter removes that
-/// restriction.
-///
-/// MUST be replaced with a real authorization check before the box is ever exposed
-/// beyond the local network.
+/// Allows all dashboard requests, overriding Hangfire's default that 401s any request
+/// not local to the server process (so a LAN browser can reach it). Deliberate under the
+/// home-LAN-only threat model; must become a real auth check before any wider exposure.
 /// </summary>
 public sealed class AllowAllDashboardAuthorizationFilter : IDashboardAuthorizationFilter
 {

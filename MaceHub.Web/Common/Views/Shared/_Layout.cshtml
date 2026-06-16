@@ -5,12 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@(ViewData["Title"] is string t ? $"{t} · Mace Hub" : "Mace Hub")</title>
 
-    @* Vite output: fixed filenames under wwwroot/dist (single-user app, no hashing). *@
     <link rel="stylesheet" href="~/dist/main.css" asp-append-version="true" />
-
-    @* htmx is loaded as a plain, pinned CDN <script> tag — NOT bundled through Vite
-       (htmx is a global script; importing it through the module graph is fussy).
-       The htmx SSE extension is intentionally omitted (deferred until a feature streams). *@
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.4/dist/htmx.min.js"></script>
 </head>
 <body class="min-h-screen bg-base-200 text-base-content">
@@ -24,7 +19,6 @@
         @RenderBody()
     </main>
 
-    @* Vite-bundled TypeScript entry point. *@
     <script type="module" src="~/dist/main.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
