@@ -75,7 +75,11 @@ app.MapControllers();
 
 // One trivial recurring job proves the wiring. The future scheduled pg_dump backup
 // job will live here too (deferred — see CLAUDE.md / SCAFFOLD.md).
-RecurringJob.AddOrUpdate(
+// Resolve IRecurringJobManager from DI rather than the static RecurringJob facade: the
+// static API reads the global JobStorage.Current, which is only set as a side effect of
+// the storage being resolved elsewhere — a hidden ordering dependency. The DI manager
+// has its storage injected, so it works regardless of registration order.
+app.Services.GetRequiredService<IRecurringJobManager>().AddOrUpdate(
     "heartbeat",
     () => Console.WriteLine($"[heartbeat] Mace Hub alive at {DateTime.UtcNow:u}"),
     Cron.Minutely);

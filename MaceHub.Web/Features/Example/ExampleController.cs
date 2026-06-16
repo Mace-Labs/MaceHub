@@ -27,7 +27,14 @@ public class ExampleController(MaceHubDbContext db) : Controller
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest(ModelState);
+            // htmx ignores non-2xx responses by default, so returning BadRequest here would
+            // make an invalid submission silently no-op. Instead, reply 200 but use response
+            // headers to redirect the swap to the form's error region (HX-Retarget) and
+            // replace its contents (HX-Reswap). No HX-Trigger is sent, so the form is NOT
+            // reset — the user keeps their input to correct it.
+            Response.Headers["HX-Retarget"] = "#example-form-error";
+            Response.Headers["HX-Reswap"] = "innerHTML";
+            return PartialView("_FormErrors", ModelState);
         }
 
         var item = new ExampleItem
@@ -40,6 +47,9 @@ public class ExampleController(MaceHubDbContext db) : Controller
         db.ExampleItems.Add(item);
         await db.SaveChangesAsync(ct);
 
+        // Signal a successful add so the form (and only on success) clears itself and any
+        // lingering error message — see hx-on:example-item-added in Index.cshtml.
+        Response.Headers["HX-Trigger"] = "example-item-added";
         return PartialView("_ExampleRow", item);
     }
 }

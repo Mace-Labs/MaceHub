@@ -13,10 +13,13 @@
         @* hx-post submits to /example; the returned _ExampleRow partial is appended
            to the table body. This single fragment swap is the htmx pattern the
            scaffold needs to prove. *@
+        @* Reset (and clear any error) only on a genuine add: the server fires the
+           example-item-added event via the HX-Trigger header on success, never on a
+           validation error — so invalid input keeps the user's values for correction. *@
         <form hx-post="/example"
               hx-target="#example-rows"
               hx-swap="afterbegin"
-              hx-on::after-request="if(event.detail.successful) this.reset()"
+              hx-on:example-item-added="this.reset(); document.getElementById('example-form-error').innerHTML = ''"
               class="flex flex-col gap-3 sm:flex-row sm:items-end">
             <label class="flex flex-col gap-1 w-full">
                 <span class="text-sm">Name</span>
@@ -30,6 +33,10 @@
             </label>
             <button type="submit" class="btn btn-primary">Add item</button>
         </form>
+
+        @* Server-side validation errors land here when Add returns invalid (the controller
+           retargets the swap to this element). Empty on the happy path. *@
+        <div id="example-form-error" class="mt-3"></div>
     </div>
 </div>
 
