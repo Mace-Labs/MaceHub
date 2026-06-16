@@ -1,0 +1,12 @@
+@model MaceHub.Web.Features.Example.ExampleItem
+
+<tr>
+    <td>@Model.Name</td>
+    <td class="truncate max-w-xs"><a class="link" href="@Model.Url" target="_blank" rel="noopener">@Model.Url</a></td>
+    <td>@Model.CreatedUtc.ToString("u")</td>
+    <td class="text-right">
+        @* Links to the Details sub-feature (Features/Example/Details), exercising the
+           namespace-driven nested view resolution end to end. *@
+        <a class="btn btn-xs btn-ghost" href="/example/@Model.Id">Details</a>
+    </td>
+</tr>

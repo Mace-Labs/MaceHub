@@ -1,0 +1,8 @@
+@* Project-root _ViewImports: Razor discovers _ViewImports/_ViewStart by walking UP
+   the physical directory tree from each view. Feature views live under Features/,
+   so these two files must sit at the project root to apply to every slice. The
+   shared _Layout itself lives in Common/Views/Shared/ and is resolved via the
+   FeatureViewLocationExpander, exactly as specified. *@
+@using MaceHub.Web
+@using MaceHub.Web.Features.Example
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

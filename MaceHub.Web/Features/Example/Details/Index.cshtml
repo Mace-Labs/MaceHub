@@ -1,0 +1,30 @@
+@model MaceHub.Web.Features.Example.ExampleItem
+@{
+    ViewData["Title"] = $"Example #{Model.Id}";
+}
+
+<div class="prose mb-6">
+    <h1>@Model.Name</h1>
+    <p class="text-base-content/70">Example item details (nested sub-feature view).</p>
+</div>
+
+<div class="card card-border bg-base-100 max-w-lg">
+    <div class="card-body">
+        <dl class="grid grid-cols-3 gap-2">
+            <dt class="font-semibold">Id</dt>
+            <dd class="col-span-2">@Model.Id</dd>
+
+            <dt class="font-semibold">Name</dt>
+            <dd class="col-span-2">@Model.Name</dd>
+
+            <dt class="font-semibold">Url</dt>
+            <dd class="col-span-2"><a class="link" href="@Model.Url" target="_blank" rel="noopener">@Model.Url</a></dd>
+
+            <dt class="font-semibold">Created (UTC)</dt>
+            <dd class="col-span-2">@Model.CreatedUtc.ToString("u")</dd>
+        </dl>
+        <div class="card-actions justify-start mt-4">
+            <a href="/example" class="btn btn-ghost">← Back to Example</a>
+        </div>
+    </div>
+</div>

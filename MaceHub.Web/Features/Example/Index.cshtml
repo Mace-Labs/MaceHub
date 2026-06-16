@@ -1,0 +1,57 @@
+@model MaceHub.Web.Features.Example.ExampleIndexViewModel
+@{
+    ViewData["Title"] = "Example";
+}
+
+<div class="prose mb-6">
+    <h1>Example</h1>
+    <p class="text-base-content/70">Disposable scaffold slice. Add an item — the new row is swapped in via htmx with no full-page reload.</p>
+</div>
+
+<div class="card card-border bg-base-100 mb-6">
+    <div class="card-body">
+        @* hx-post submits to /example; the returned _ExampleRow partial is appended
+           to the table body. This single fragment swap is the htmx pattern the
+           scaffold needs to prove. *@
+        <form hx-post="/example"
+              hx-target="#example-rows"
+              hx-swap="afterbegin"
+              hx-on::after-request="if(event.detail.successful) this.reset()"
+              class="flex flex-col gap-3 sm:flex-row sm:items-end">
+            <label class="form-control w-full">
+                <span class="label-text">Name</span>
+                <input name="Name" required maxlength="200"
+                       class="input input-bordered w-full" placeholder="My link" />
+            </label>
+            <label class="form-control w-full">
+                <span class="label-text">Url</span>
+                <input name="Url" type="url" required maxlength="2048"
+                       class="input input-bordered w-full" placeholder="https://example.com" />
+            </label>
+            <button type="submit" class="btn btn-primary">Add item</button>
+        </form>
+    </div>
+</div>
+
+<div class="card card-border bg-base-100">
+    <div class="card-body">
+        <div class="overflow-x-auto">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Url</th>
+                        <th>Created (UTC)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="example-rows">
+                    @foreach (var item in Model.Items)
+                    {
+                        <partial name="_ExampleRow" model="item" />
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

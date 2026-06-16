@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+/* Tailwind v4 scans these for class names. Explicit @source keeps detection robust
+   regardless of the build's working directory (matters in the Docker build). */
+@source "../Features/**/*.cshtml";
+@source "../Common/**/*.cshtml";
+
+/* Tailwind v4 + daisyUI 5 are CSS-first: daisyUI is loaded and themed HERE, not in a
+   tailwind.config.js daisyui block. Only the dark theme ships (no theme switcher);
+   swap to another dark theme by changing this one line. */
+@plugin "daisyui" {
+  themes: dark --default;
+}

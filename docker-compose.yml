@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      # Named volume at the data dir → data survives container recreation/image
+      # updates (restart: unless-stopped only keeps the container running).
+      - macehub-db-data:/var/lib/postgresql/data
+    healthcheck:
+      # $$ escapes compose interpolation so the container shell reads its own env.
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # Single source of truth for the DB connection (host must be the db service name).
+      ConnectionStrings__Default: ${ConnectionStrings__Default}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      ASPNETCORE_ENVIRONMENT: Production
+    ports:
+      # Mapped for LAN access (http only — home network, no public exposure).
+      - "8080:8080"
+
+volumes:
+  macehub-db-data:
