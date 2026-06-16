@@ -3,8 +3,8 @@
     ViewData["Title"] = "Example";
 }
 
-<div class="prose mb-6">
-    <h1>Example</h1>
+<div class="mb-6">
+    <h1 class="text-3xl font-bold mb-2">Example</h1>
     <p class="text-base-content/70">Disposable scaffold slice. Add an item — the new row is swapped in via htmx with no full-page reload.</p>
 </div>
 
@@ -18,15 +18,15 @@
               hx-swap="afterbegin"
               hx-on::after-request="if(event.detail.successful) this.reset()"
               class="flex flex-col gap-3 sm:flex-row sm:items-end">
-            <label class="form-control w-full">
-                <span class="label-text">Name</span>
+            <label class="flex flex-col gap-1 w-full">
+                <span class="text-sm">Name</span>
                 <input name="Name" required maxlength="200"
-                       class="input input-bordered w-full" placeholder="My link" />
+                       class="input w-full" placeholder="My link" />
             </label>
-            <label class="form-control w-full">
-                <span class="label-text">Url</span>
+            <label class="flex flex-col gap-1 w-full">
+                <span class="text-sm">Url</span>
                 <input name="Url" type="url" required maxlength="2048"
-                       class="input input-bordered w-full" placeholder="https://example.com" />
+                       class="input w-full" placeholder="https://example.com" />
             </label>
             <button type="submit" class="btn btn-primary">Add item</button>
         </form>
