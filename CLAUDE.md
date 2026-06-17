@@ -241,6 +241,18 @@ Common/
   verified** — before building the first real feature. Do not copy it as a
   template or let it ship.
 
+### Comments
+- **Default to no comment.** A comment is a maintained artifact with an ongoing
+  cost; a stale comment is worse than none. Only keep one that explains something
+  the code cannot — a non-obvious *why* (trade-off, workaround, external
+  constraint/gotcha) or a warning whose violation causes a real bug.
+- Do **not** write comments that restate the code, narrate the change or task
+  ("step 1", "now we…", "proves the wiring"), or duplicate CLAUDE.md/docs.
+  Task-relative notes go stale — "step 1" may not be step 1 after the next edit.
+- The test: **would it still be true and useful two years from now, after the
+  code around it has been refactored?** If not, omit it. Removing low-value
+  comments is a normal part of reviewing a diff.
+
 ### Frontend asset pipeline (Vite → Razor)
 - Vite compiles TypeScript and Tailwind CSS. **Output goes to a fixed path under
   `wwwroot`** (e.g. `wwwroot/dist/`) that `_Layout.cshtml` references directly.

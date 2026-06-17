@@ -1,0 +1,58 @@
+@model MaceHub.Web.Features.Example.ExampleIndexViewModel
+@{
+    ViewData["Title"] = "Example";
+}
+
+<div class="mb-6">
+    <h1 class="text-3xl font-bold mb-2">Example</h1>
+    <p class="text-base-content/70">Disposable scaffold slice. Add an item — the new row is swapped in via htmx with no full-page reload.</p>
+</div>
+
+<div class="card card-border bg-base-100 mb-6">
+    <div class="card-body">
+        @* example-item-added fires only on a successful add (server HX-Trigger header),
+           so the form resets on success but keeps the user's input on a validation error. *@
+        <form hx-post="/example"
+              hx-target="#example-rows"
+              hx-swap="afterbegin"
+              hx-on:example-item-added="this.reset(); document.getElementById('example-form-error').innerHTML = ''"
+              class="flex flex-col gap-3 sm:flex-row sm:items-end">
+            <label class="flex flex-col gap-1 w-full">
+                <span class="text-sm">Name</span>
+                <input name="Name" required maxlength="200"
+                       class="input w-full" placeholder="My link" />
+            </label>
+            <label class="flex flex-col gap-1 w-full">
+                <span class="text-sm">Url</span>
+                <input name="Url" type="url" required maxlength="2048"
+                       class="input w-full" placeholder="https://example.com" />
+            </label>
+            <button type="submit" class="btn btn-primary">Add item</button>
+        </form>
+
+        <div id="example-form-error" class="mt-3"></div>
+    </div>
+</div>
+
+<div class="card card-border bg-base-100">
+    <div class="card-body">
+        <div class="overflow-x-auto">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Url</th>
+                        <th>Created (UTC)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="example-rows">
+                    @foreach (var item in Model.Items)
+                    {
+                        <partial name="_ExampleRow" model="item" />
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

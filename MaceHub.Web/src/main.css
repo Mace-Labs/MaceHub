@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+/* Explicit @source so class detection is independent of the build working directory. */
+@source "../Features/**/*.cshtml";
+@source "../Common/**/*.cshtml";
+
+/* daisyUI is configured here (CSS-first), not in a tailwind.config.js daisyui block. */
+@plugin "daisyui" {
+  themes: dark --default;
+}

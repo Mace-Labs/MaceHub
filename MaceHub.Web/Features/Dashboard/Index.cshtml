@@ -1,0 +1,30 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="mb-6">
+    <h1 class="text-3xl font-bold mb-2">Mace Hub</h1>
+    <p class="text-base-content/70">Your personal tools hub. Features will be listed here.</p>
+</div>
+
+<div class="grid gap-4 sm:grid-cols-2">
+    <div class="card card-border bg-base-100">
+        <div class="card-body">
+            <h2 class="card-title">Example slice</h2>
+            <p>Disposable scaffold slice — proves the wiring (views, htmx swap, sub-feature).</p>
+            <div class="card-actions justify-end">
+                <a href="/example" class="btn btn-primary">Open</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-border bg-base-100">
+        <div class="card-body">
+            <h2 class="card-title">Hangfire</h2>
+            <p>Background job dashboard (no auth — home network only).</p>
+            <div class="card-actions justify-end">
+                <a href="/hangfire" class="btn btn-secondary">Open</a>
+            </div>
+        </div>
+    </div>
+</div>

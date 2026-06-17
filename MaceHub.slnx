@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="MaceHub.Tests/MaceHub.Tests.csproj" />
+  <Project Path="MaceHub.Web/MaceHub.Web.csproj" />
+</Solution>

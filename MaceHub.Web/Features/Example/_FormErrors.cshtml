@@ -1,0 +1,8 @@
+@model Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary
+
+<ul class="text-error text-sm list-disc list-inside">
+    @foreach (var error in Model.Values.SelectMany(v => v.Errors))
+    {
+        <li>@(string.IsNullOrEmpty(error.ErrorMessage) ? "Invalid input." : error.ErrorMessage)</li>
+    }
+</ul>
